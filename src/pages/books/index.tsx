@@ -1,10 +1,18 @@
 import { Wrapper } from "@/components"
 import { books } from "@/mocks/book"
+import Link from "next/link"
+import { useRouter } from "next/router"
 
 const columns = Object.keys(books[0])
 const rows = books.map(book => Object.values(book))
 
 export default function Books() {
+    const router = useRouter()
+
+    function navigateToBookDetailsPage(isbn: string) {
+        router.push(`/books/${isbn}`)
+    }
+
     return (
         <div className="rounded-lg border border-gray-200">
             <div className="overflow-x-auto rounded-t-lg">
@@ -19,7 +27,7 @@ export default function Books() {
 
                     <tbody className="divide-y divide-gray-200">
                         {rows.map((row, index) => (
-                            <tr key={index}>
+                            <tr key={index} onClick={() => navigateToBookDetailsPage(row[2])}>
                                 {row.map(book => (
                                     <td key={book} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                         {book}
