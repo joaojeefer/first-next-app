@@ -1,4 +1,4 @@
-interface ILivro {
+interface IBook {
     isbn: string;
     title: string;
     synopsis?: string;
@@ -13,7 +13,7 @@ interface ILivro {
     status: string;
 }
 
-const books: ILivro[] = [
+const books: IBook[] = [
     {
         title: "A Revolução dos Bichos",
         authors: ["George Orwell"],
@@ -86,4 +86,5 @@ const books: ILivro[] = [
     }
   ];
 
-export { books }
+export { books };
+export type { IBook };
