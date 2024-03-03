@@ -1,12 +1,19 @@
 import { Wrapper } from "@/components"
-import { books } from "@/mocks/book"
-import Link from "next/link"
+import { IBook } from "@/mocks/book"
+import { GetStaticProps, InferGetStaticPropsType } from "next"
 import { useRouter } from "next/router"
 
-const columns = Object.keys(books[0])
-const rows = books.map(book => Object.values(book))
+export const getStaticProps = (async () => {
+    const res = await fetch(`http://localhost:3000/api/books`)
+    const books = await res.json()
 
-export default function Books() {
+    return { props: { books }}
+}) satisfies GetStaticProps<{ books: IBook[] }>
+
+export default function Books({ books }: InferGetStaticPropsType<typeof getStaticProps>) {
+    const columns = Object.keys(books[0])
+    const rows = books.map((book: IBook) => Object.values(book))
+
     const router = useRouter()
 
     function navigateToBookDetailsPage(isbn: string) {
